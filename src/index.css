@@ -11,3 +11,6 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* e.g., src/index.css or a layout css */
+#content { padding-top: 1rem; }

@@ -1,0 +1,112 @@
+// src/components/HeroSection.jsx
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import {
+  FaPlane, FaHotel, FaTrain, FaBus, FaShip, FaCar,
+  FaUmbrellaBeach, FaMountain, FaCompass, FaGlobeAmericas,
+  FaCamera, FaUmbrella, FaTicketAlt, FaCalendarAlt,
+  FaSun, FaHome, FaWallet, FaBicycle, FaCity, FaAnchor ,FaUtensils,FaLandmark,FaCampground
+} from "react-icons/fa";
+import { FaSailboat } from "react-icons/fa6";
+import { useTranslation } from 'react-i18next';
+import HouseboatsCarousel from './OffersCarousel';
+import './HeroSection.css';
+
+const categories = [
+  { key: 'houseboats', label: 'houseboats', icon: FaShip },
+  { key: 'shikara', label: 'shikara', icon: FaSailboat }, 
+  { key: 'flights', label: 'flights', icon: FaPlane },
+  { key: 'hotels', label: 'hotels', icon: FaHotel },
+  { key: 'trains', label: 'trains', icon: FaTrain },
+  { key: 'buses', label: 'buses', icon: FaBus },
+  { key: 'cars', label: 'cars', icon: FaCar },
+  { key: 'tours', label: 'tours', icon: FaCompass },
+  { key: 'cruises', label: 'cruises', icon: FaAnchor },
+  { key: 'activities', label: 'activities', icon: FaTicketAlt },
+  { key: 'packages', label: 'packages', icon: FaCalendarAlt },
+  { key: 'weekend', label: 'weekend', icon: FaSun },
+  { key: 'beaches', label: 'beaches', icon: FaUmbrellaBeach },
+  { key: 'mountains', label: 'mountains', icon: FaMountain },
+  { key: 'adventure', label: 'adventure', icon: FaCompass },
+  { key: 'citybreaks', label: 'citybreaks', icon: FaCity },
+  { key: 'photography', label: 'photography', icon: FaCamera },
+  { key: 'insurance', label: 'insurance', icon: FaUmbrella },
+  { key: 'passes', label: 'passes', icon: FaTicketAlt },
+  { key: 'budget', label: 'budget', icon: FaWallet },
+  { key: 'bikes', label: 'bikes', icon: FaBicycle },
+  { key: 'villas', label: 'villas', icon: FaHome },
+  { key: 'food', label: 'food', icon: FaUtensils },
+  { key: 'camping', label: 'camping', icon: FaCampground },
+];
+
+export default function HeroSection() {
+  const [isVisible, setIsVisible] = useState(false);
+  const navigate = useNavigate();
+  const { t } = useTranslation();
+
+  useEffect(() => { 
+    setIsVisible(true); 
+  }, []);
+
+  const handleCardClick = (categoryKey) => {
+    navigate(`/${categoryKey}`);
+  };
+
+  const handleDealsClick = () => {
+    navigate('/deals');
+  };
+
+  const handleExploreClick = () => {
+  navigate('/destinationfeed');
+};
+
+  return (
+    <section className="hero" aria-labelledby="hero-title">
+      <div className="hero-container">
+        <div className={`cards-container ${isVisible ? 'animate-in' : ''}`}>
+          <ul className="card-grid" role="list">
+            {categories.map((category, index) => {
+              const Icon = category.icon;
+              return (
+                <li
+                  key={category.key}
+                  className="card-item"
+                  style={{ '--animation-delay': `${(index * 0.05 + 0.4)}s` }}
+                >
+                  <div
+                    className="travel-card"
+                    onClick={() => handleCardClick(category.key)}
+                  >
+                    <div className="card-content">
+                      <div className="icon-wrapper">
+                        <Icon className="card-icon" />
+                      </div>
+                      <h3 className="card-title">{t(category.label)}</h3>
+                    </div>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+
+        <header className={`hero-headline ${isVisible ? 'animate-in' : ''}`}>
+          <h1 id="hero-title" className="hero-title">
+            {t('heroTitle')}
+          </h1>
+          <p className="hero-subtitle">
+            {t('heroSubtitle')}
+          </p>
+        </header>
+        <div className={`quick-actions ${isVisible ? 'animate-in' : ''}`}>
+          <button className="btn btn-primary" onClick={handleDealsClick}>
+            {t('todaysDeals')}
+          </button>
+          <button className="btn btn-secondary" onClick={handleExploreClick}>
+              {t('exploreDestinations')}
+            </button>
+          </div>
+      </div>
+    </section>
+  );
+}

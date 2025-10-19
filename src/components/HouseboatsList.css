@@ -1,0 +1,126 @@
+/* HouseboatsList.css remains unchanged from previous version */
+.houseboats-container {
+  max-width: 1024px; /* max-w-4xl */
+  margin: 0 auto; /* mx-auto */
+  padding: 1.5rem; /* p-6 */
+}
+
+.houseboats-header {
+  text-align: center; /* text-center */
+  margin-bottom: 2rem; /* mb-8 */
+}
+
+.houseboats-title {
+  font-size: 1.875rem; /* text-3xl */
+  font-weight: bold; /* font-bold */
+  color: #1f2937; /* text-gray-800 */
+  margin-bottom: 0.5rem; /* mb-2 */
+}
+
+.houseboats-subtitle {
+  color: #6b7280; /* text-gray-600 */
+}
+
+.houseboats-search-container {
+  position: relative; /* relative */
+  margin-bottom: 2rem; /* mb-8 */
+}
+
+.houseboats-search-icon {
+  position: absolute; /* absolute */
+  left: 0.75rem; /* left-3 */
+  top: 0.75rem; /* top-3 */
+  height: 1.25rem; /* h-5 */
+  width: 1.25rem; /* w-5 */
+  color: #9ca3af; /* text-gray-400 */
+}
+
+.houseboats-search-input {
+  width: 100%; /* w-full */
+  padding-left: 2.5rem; /* pl-10 */
+  padding-right: 1rem; /* pr-4 */
+  padding-top: 0.75rem; /* py-3 */
+  padding-bottom: 0.75rem; /* py-3 */
+  border: 1px solid #d1d5db; /* border border-gray-300 */
+  border-radius: 0.5rem; /* rounded-lg */
+}
+
+.houseboats-search-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #3b82f6; /* focus:ring-2 focus:ring-blue-500 */
+  border-color: #3b82f6; /* focus:border-blue-500 */
+}
+
+.houseboats-results-grid {
+  display: grid; /* grid */
+  gap: 1rem; /* gap-4 */
+}
+
+@media (min-width: 768px) {
+  .houseboats-results-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr)); /* md:grid-cols-2 */
+  }
+}
+
+.houseboats-result-card {
+  background-color: white; /* bg-white */
+  border: 1px solid #e5e7eb; /* border border-gray-200 */
+  border-radius: 0.5rem; /* rounded-lg */
+  padding: 1rem; /* p-4 */
+  transition: all 0.3s; /* transition-all */
+  cursor: pointer; /* cursor-pointer */
+  text-decoration: none; /* Remove underline for links */
+  color: inherit; /* Inherit text color */
+}
+
+.houseboats-result-card:hover {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* hover:shadow-md */
+  border-color: #93c5fd; /* hover:border-blue-300 */
+}
+
+.houseboats-card-content {
+  display: flex; /* flex */
+  align-items: flex-start; /* items-start */
+  gap: 0.75rem; /* gap-3 */
+}
+
+.houseboats-map-icon {
+  height: 1.25rem; /* h-5 */
+  width: 1.25rem; /* w-5 */
+  color: #3b82f6; /* text-blue-500 */
+  margin-top: 0.25rem; /* mt-1 */
+  flex-shrink: 0; /* flex-shrink-0 */
+}
+
+.houseboats-card-title {
+  font-weight: 500; /* font-medium */
+  color: #1f2937; /* text-gray-800 */
+  transition: color 0.2s; /* transition-colors */
+}
+
+.houseboats-card-title:hover {
+  color: #2563eb; /* hover:text-blue-600 */
+}
+
+.houseboats-no-results {
+  text-align: center; /* text-center */
+  padding-top: 3rem; /* py-12 */
+  padding-bottom: 3rem; /* py-12 */
+}
+
+.houseboats-no-results-text {
+  color: #6b7280; /* text-gray-500 */
+}
+
+@media screen and (max-width: 1024px) and (orientation: landscape) {
+  .houseboats-results-grid {
+    grid-template-columns: repeat(4, 1fr); /* force 4 cards */
+  }
+  .houseboats-result-card {
+    padding: 0.5rem; /* reduce padding */
+    font-size: 0.875rem; /* reduce font size */
+    line-height: 1.25rem; /* adjust line height */
+    min-height: 3rem; /* ensure minimum height */
+    
+  }
+}
