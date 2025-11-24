@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { MessageCircle, MapPin, DollarSign, Heart, Mail, Phone, Send } from 'lucide-react';
 import './DestinationFeed.css';
+import { useLocation } from 'react-router-dom';
 
 const OffersFeed = () => {
   const [offers, setOffers] = useState([]);
@@ -16,6 +17,9 @@ const OffersFeed = () => {
     subject: '',
     message: ''
   });
+  const location = useLocation();
+  const selectedOffer = location.state?.selectedOffer;
+  const offerRefs = useRef({});
   const observer = useRef();
   const inquiryRef = useRef(null);
 
@@ -29,7 +33,7 @@ const OffersFeed = () => {
       image: "/Travel_image/Hotel.jpg",
       rating: 4.8,
       reviews: 247,
-      whatsapp: "919999999999",
+      whatsapp: "919349401700",
       email: "hotels@keralatourism.com"
     },
     {
@@ -40,7 +44,7 @@ const OffersFeed = () => {
       image: "/Travel_image/Houseboats in Alleppey day and night cruise.jpeg",
       rating: 4.5,
       reviews: 189,
-      whatsapp: "919999999999",
+      whatsapp: "919349401700",
       email: "hotels@keralatourism.com"
     },
     {
@@ -51,7 +55,7 @@ const OffersFeed = () => {
       image: "/Travel_image/Houseboats in Alleppey day and night 1 bedroom.jpg",
       reviews: 312,
       rating: 4.9,
-      whatsapp: "919999999999",
+      whatsapp: "919349401700",
       email: "hotels@keralatourism.com"
     },
     {
@@ -62,7 +66,7 @@ const OffersFeed = () => {
       image: "/Travel_image/Houseboats in Allapuzha day cruise 1 bedroom upper deck private.jpg",
       rating: 4.7,
       reviews: 156,
-      whatsapp: "919999999999",
+      whatsapp: "919349401700",
       email: "hotels@keralatourism.com"
     },
     {
@@ -73,7 +77,7 @@ const OffersFeed = () => {
       image: "/Travel_image/Kerala honeymoon houseboat.png",
       rating: 4.6,
       reviews: 98,
-      whatsapp: "919999999999",
+      whatsapp: "919349401700",
       email: "hotels@keralatourism.com"
     },
     {
@@ -84,7 +88,7 @@ const OffersFeed = () => {
       image: "/Travel_image/Houseboats in Allapuzha day cruise 1 bedroom upper deck private.jpg",
       rating: 4.8,
       reviews: 203,
-      whatsapp: "919999999999",
+      whatsapp: "919349401700",
       email: "hotels@keralatourism.com"
     },
     {
@@ -95,7 +99,7 @@ const OffersFeed = () => {
       image: "/Travel_image/Houseboat in Alleppey day and night 1 bedroom upper deck private houseboat.jpg",
       rating: 4.7,
       reviews: 421,
-      whatsapp: "919999999999",
+      whatsapp: "919349401700",
       email: "hotels@keralatourism.com"
     },
     {
@@ -106,18 +110,18 @@ const OffersFeed = () => {
       image: "/Travel_image/Houseboats in Alleppey day trip upper deck houseboat.jpg",
       rating: 4.6,
       reviews: 287,
-      whatsapp: "919999999999",
+      whatsapp: "919349401700",
       email: "hotels@keralatourism.com"
     },
     {
       id: 9,
       title: "Houseboats in Alleppey b2b price for 1 bedroom",
       price: 8999,
-      description: "We avail them in deluxe, premium and luxury categories starting from ₹5499 There are 2 types of 1 Bedroom houseboats in Alleppey – with upper deck and without upper deck. There are advantages to both. The former type, with an upper deck , offers you a better view of the route through which it cruises.",
+      description: "We avail them in deluxe, premium and luxury categories  There are 2 types of 1 Bedroom houseboats in Alleppey  with upper deck and without upper deck. There are advantages to both. The former type, with an upper deck , offers you a better view of the route through which it cruises.",
       image: "/Travel_image/Houseboats in Alleppey b2b price for 1 bedroom.jpg",
       rating: 4.5,
       reviews: 334,
-      whatsapp: "919999999999",
+      whatsapp: "919349401700",
       email: "hotels@keralatourism.com"
     },
     {
@@ -128,7 +132,7 @@ const OffersFeed = () => {
       image: "/Travel_image/Sharing houseboats in Alleppey 2 people price.jpg",
       rating: 4.8,
       reviews: 192,
-      whatsapp: "919999999999",
+      whatsapp: "919349401700",
       email: "hotels@keralatourism.com"
     },
     {
@@ -139,7 +143,7 @@ const OffersFeed = () => {
       image: "/Travel_image/Ultra premium houseboats in Alleppey.jpg",
       rating: 4.4,
       reviews: 567,
-      whatsapp: "919999999999",
+      whatsapp: "919349401700",
       email: "hotels@keralatourism.com"
     },
     {
@@ -150,7 +154,7 @@ const OffersFeed = () => {
       image: "/Travel_image/Kerala tour budget packages.jpg",
       rating: 4.9,
       reviews: 445,
-      whatsapp: "919999999999",
+      whatsapp: "919349401700",
       email: "hotels@keralatourism.com"
     },
     {
@@ -161,7 +165,7 @@ const OffersFeed = () => {
       image: "/Travel_image/Kerala Boating.jpg",
       rating: 4.7,
       reviews: 213,
-      whatsapp: "919999999999",
+      whatsapp: "919349401700",
       email: "hotels@keralatourism.com"
     },
     {
@@ -172,7 +176,7 @@ const OffersFeed = () => {
       image: "/Travel_image/B2B price travel deals for - kerala house boat packages.jpg",
       rating: 4.6,
       reviews: 178,
-      whatsapp: "919999999999",
+      whatsapp: "919349401700",
       email: "hotels@keralatourism.com"
     },
     {
@@ -183,18 +187,18 @@ const OffersFeed = () => {
       image: "/Travel_image/Petals flower's.jpg",
       rating: 4.5,
       reviews: 389,
-      whatsapp: "919999999999",
+      whatsapp: "919349401700",
       email: "hotels@keralatourism.com"
     },
     {
       id: 16,
-      title: "Orchid flowering plants",
+      title: "Orchid for sale - orchid flowering plants",
       price: 699,
       description: "Bring home the elegance of tropical blooms with our vibrant orchid flowering plants. Available in stunning varieties like Phalaenopsis and Vanda, these orchids feature vivid colors, unique patterns, and long-lasting flowers. Perfect for indoor décor, gifting, or garden display, each plant is easy to care for and thrives in indirect light. Starting at just ₹399, elevate your space with nature’s finest artistry.",
       image: "/Travel_image/Orchid flowering plants.jpg",
       rating: 4.7,
       reviews: 156,
-      whatsapp: "919999999999",
+      whatsapp: "919349401700",
       email: "hotels@keralatourism.com"
     },
     {
@@ -205,7 +209,7 @@ const OffersFeed = () => {
       image: "/Travel_image/Oxidised Ornaments.jpg",
       rating: 4.6,
       reviews: 298,
-      whatsapp: "919999999999",
+      whatsapp: "919349401700",
       email: "hotels@keralatourism.com"
     },
     {
@@ -216,7 +220,7 @@ const OffersFeed = () => {
       image: "/Travel_image/Kerala Handlooms - kerala kasavu sarees.jpg",
       rating: 4.8,
       reviews: 167,
-      whatsapp: "919999999999",
+      whatsapp: "919349401700",
       email: "hotels@keralatourism.com"
     },
     {
@@ -227,18 +231,18 @@ const OffersFeed = () => {
       image: "/Travel_image/Kerala handicrafts.jpg",
       rating: 4.9,
       reviews: 234,
-      whatsapp: "919999999999",
+      whatsapp: "919349401700",
       email: "hotels@keralatourism.com"
     },
     {
       id: 20,
-      title: "kerala banana chips",
+      title: "kerala chips - kerala banana chips",
       price: 2299,
       description: "Kerala chips, nendran chips in Kerala, jackfruit chips in Kerala.",
       image: "/Travel_image/Food order online - kerala banana chips.jpg",
       rating: 4.5,
       reviews: 143,
-      whatsapp: "919999999999",
+      whatsapp: "919349401700",
       email: "hotels@keralatourism.com",
       location: "Kozhikode, Kerala",
       map: "https://maps.google.com/?q=Kozhikode+Kerala",
@@ -251,19 +255,20 @@ const OffersFeed = () => {
       image: "https://tse4.mm.bing.net/th/id/OIP.h8g8FW499Ga90twq5xa2RwHaDt?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3",
       rating: 4.8,
       reviews: 289,
-      whatsapp: "919846780080",
+      whatsapp: "919349401700",
       email: "info@keralaspicesonline.com"
     },
     {
       id: 22,
-      title: "Dried Fish - Kerala Dried Shrimp",
+      title: "Dried fish ",
       price: 589,
       description: "Premium export-quality dried freshwater prawns from Ashtamudi Lake, hygienically sun-dried without salt. Medium-large sized shrimps perfect for masala, gravy, and chutney.",
       image: "https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?w=800",
       rating: 4.6,
       reviews: 156,
-      whatsapp: "919790131444",
-      email: "sales@karuvadukadai.com"
+      whatsapp: "919349401700",
+      email: "sales@karuvadukadai.com",
+      location: "Vembanad & Ashtamudi Lake, Kerala",
     },
     {
       id: 23,
@@ -273,18 +278,18 @@ const OffersFeed = () => {
       image: "https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=800",
       rating: 4.3,
       reviews: 87,
-      whatsapp: "919895123456",
+      whatsapp: "919349401700",
       email: "info@keralarealestate.com"
     },
     {
       id: 24,
-      title: "Kerala Lottery Tickets",
+      title: "Kerala lottery tickets - kerala bumper lottery tickets",
       price: 50,
       description: "Official Kerala State Lottery tickets with weekly draws. Win Win, Sthree Sakthi, Fifty Fifty, and Karunya lotteries. First prizes up to ₹1 Crore.",
       image: "https://tse1.mm.bing.net/th/id/OIP.aBgXwEuvoH4I5v2oZbsEgAHaEK?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3",
       rating: 4.2,
       reviews: 512,
-      whatsapp: "919447000000",
+      whatsapp: "919349401700",
       email: "lottery@kerala.gov.in"
     },
     {
@@ -295,7 +300,7 @@ const OffersFeed = () => {
       image: "Travel_image/kerala_home_decor.jpg",
       rating: 4.2,
       reviews: 512,
-      whatsapp: "919447000000",
+      whatsapp: "919349401700",
       email: "lottery@kerala.gov.in"
     },
     {
@@ -306,7 +311,7 @@ const OffersFeed = () => {
       image: "Travel_image/Transportation in Kerala.jpg",
       rating: 4.2,
       reviews: 512,
-      whatsapp: "919447000000",
+      whatsapp: "919349401700",
       email: "lottery@kerala.gov.in"
     },
     {
@@ -317,7 +322,7 @@ const OffersFeed = () => {
       image: "Travel_image/choir.jpg",
       rating: 4.2,
       reviews: 512,
-      whatsapp: "919447000000",
+      whatsapp: "919349401700",
       email: "lottery@kerala.gov.in"
     },
     {
@@ -328,9 +333,9 @@ const OffersFeed = () => {
       image: "Travel_image/Food.jpg",
       rating: 4.2,
       reviews: 512,
-      whatsapp: "919447000000",
+      whatsapp: "919349401700",
       email: "lottery@kerala.gov.in",
-      location: "Cochin, Kerala",
+      location: "Alappuzha, Cochin, Thiruvanathapuram, Kerala",
       map: "https://maps.google.com/?q=Cochin+Kerala"
     }
   ];
@@ -355,15 +360,21 @@ const OffersFeed = () => {
 
     setLoading(true);
 
+    // Simulate API call
     setTimeout(() => {
-      const startIndex = (page - 1) * 5;
-      const endIndex = startIndex + 5;
+      const startIndex = (page - 1) * 10;
+      const endIndex = startIndex + 10;
       const newOffers = DUMMY_OFFERS.slice(startIndex, endIndex);
 
       if (newOffers.length === 0) {
         setHasMore(false);
       } else {
-        setOffers(prev => [...prev, ...newOffers]);
+        // Ensure no duplicates are added
+        setOffers(prev => {
+          const existingIds = new Set(prev.map(o => o.id));
+          const filteredNewOffers = newOffers.filter(o => !existingIds.has(o.id));
+          return [...prev, ...filteredNewOffers];
+        });
         setPage(prev => prev + 1);
       }
 
@@ -384,9 +395,43 @@ const OffersFeed = () => {
     if (node) observer.current.observe(node);
   }, [loading, hasMore, loadMoreOffers]);
 
+  // Initial load logic
   useEffect(() => {
-    loadMoreOffers();
-  }, []);
+    if (selectedOffer) {
+      // Find the full offer object from DUMMY_OFFERS using the ID from the selected offer
+      const fullSelectedOffer = DUMMY_OFFERS.find(o => o.id === selectedOffer.id);
+
+      if (fullSelectedOffer) {
+        // Place the full selected offer first, then the rest, avoiding duplicates.
+        const otherOffers = DUMMY_OFFERS.filter(o => o.id !== fullSelectedOffer.id);
+        const initialOffers = [fullSelectedOffer, ...otherOffers];
+        setOffers(initialOffers);
+        setPage(Math.ceil(initialOffers.length / 10) + 1); // Adjust page for infinite scroll
+        setHasMore(initialOffers.length < DUMMY_OFFERS.length);
+
+        // Scroll to the selected offer
+        setTimeout(() => {
+          if (offerRefs.current[fullSelectedOffer.id]) {
+            offerRefs.current[fullSelectedOffer.id].scrollIntoView({
+              behavior: "smooth",
+              block: "center",
+            });
+            // Optional: Highlight for visual cue
+            offerRefs.current[fullSelectedOffer.id].classList.add("highlight-offer");
+            setTimeout(() => {
+              offerRefs.current[fullSelectedOffer.id]?.classList.remove("highlight-offer");
+            }, 2000);
+          }
+        }, 100);
+      } else {
+        // Fallback if the selected offer is not found in the dummy data
+        loadMoreOffers();
+      }
+    } else {
+      // Normal initial load if no offer is selected
+      loadMoreOffers();
+    }
+  }, [selectedOffer, loadMoreOffers]);
 
   const handleWhatsAppBook = (offer) => {
     const message = `Hi! I'm interested in booking: ${offer.title}\nLocation: ${offer.location}\nPrice: ₹${offer.price.toLocaleString('en-IN')}\n\nPlease provide more details.`;
@@ -439,8 +484,11 @@ const OffersFeed = () => {
 
           return (
             <div
-              key={offer.id} // Using just the unique ID for the key is sufficient.
-              ref={isLastItem ? lastOfferRef : null}
+              key={offer.id}
+              ref={(el) => {
+                offerRefs.current[offer.id] = el;
+                if (isLastItem) lastOfferRef(el);
+              }}
               className="offer-row-card"
             >
               {/* Image Section */}

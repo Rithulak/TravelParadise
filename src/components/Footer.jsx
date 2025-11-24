@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Facebook, Instagram, Twitter, Youtube, Plane } from 'lucide-react';
@@ -15,7 +16,7 @@ const Footer = () => {
             {/* Brand & Social Section */}
             <div className="footer-section footer-brand-section">
               <div className="footer-brand">
-                <Link to="/" className="brand-logo">
+                <Link to="/info" className="brand-logo">
                   <span className="brand-text"><span style={{color: 'red'}}>T</span>ourism <span style={{color: 'red'}}>P</span>aradise</span>
                 </Link>
                 <p className="footer-description">
@@ -48,6 +49,26 @@ const Footer = () => {
                 <li><Link to="/destinationfeed">B2b Alleppey Houseboats</Link></li>
                 <li><Link to="/destinationfeed">Private Alleppey Houseboats</Link></li>
                 <li><Link to="/destinationfeed">Houseboats in India</Link></li>
+
+                <li><Link to="/destinationfeed">Shared houseboats In Alleppey </Link></li>
+                <li><Link to="/destinationfeed">Sharing Houseboats In Alleppey </Link></li>
+                <li><Link to="/destinationfeed">Sharing Boathouse In Alleppey</Link></li>
+                <li><Link to="/destinationfeed">Sharing Houseboats In Alleppey </Link></li>
+                <li><Link to="/destinationfeed">Clubbing Houseboats In Alleppey</Link></li>
+                <li><Link to="/destinationfeed">Clubbing Boathouse In Alleppey</Link></li>
+                <li><Link to="/destinationfeed">Luxury Houseboats In Alleppey</Link></li>
+                <li><Link to="/destinationfeed">Premium Houseboats In Alleppey</Link></li>
+                <li><Link to="/destinationfeed">Deluxe Houseboats In Alleppey</Link></li>
+                <li><Link to="/destinationfeed">Standard Houseboats In Alleppey</Link></li>
+                <li><Link to="/destinationfeed">Ultra Luxury Houseboats In Alleppey</Link></li>
+                <li><Link to="/destinationfeed">Ultra Luxury Sharing Houseboats In Alleppey</Link></li>
+                <li><Link to="/destinationfeed">Best Houseboats In Alleppey</Link></li>
+                <li><Link to="/destinationfeed">Best Luxury Houseboats In Alleppey</Link></li>
+                <li><Link to="/destinationfeed">Best Premium Houseboats In Alleppey</Link></li>
+                <li><Link to="/destinationfeed">Best Deluxe Houseboats In Alleppey</Link></li>
+                <li><Link to="/destinationfeed">Best Standard Houseboats In Alleppey</Link></li>
+                <li><Link to="/destinationfeed">Best Alappuzha Houseboat Packages</Link></li>
+                <li><Link to="/destinationfeed">Best Alappuzha Boat House Packages</Link></li>
               </ul>
             </div>
             <div className="footer-grid">
@@ -56,26 +77,21 @@ const Footer = () => {
             <div className="footer-section">
               <h3 className="footer-title">Services</h3>
               <ul className="footer-links">
-                <li><Link to="/flights">Flight Booking</Link></li>
-                <li><Link to="/hotels">Hotel Reservation</Link></li>
-                <li><Link to="/tours">Tour Packages</Link></li>
-                <li><Link to="/visa">Visa Assistance</Link></li>
-                <li><Link to="/insurance">Travel Insurance</Link></li>
+                <li><Link to="/destinationfeed">Flight Booking</Link></li>
+                <li><Link to="/destinationfeed">Hotel Reservation</Link></li>
+                <li><Link to="/destinationfeed">Tour Packages</Link></li>
               </ul>
             </div>
             
             <div className="footer-section">
               <h3 className="footer-title">Company</h3>
               <ul className="footer-links">
-                <li><Link to="/about">About Us</Link></li>
-                <li><Link to="/careers">Careers</Link></li>
-                <li><Link to="/press">Press</Link></li>
-                <li><Link to="/blog">Blog</Link></li>
+                <li><Link to="/about">About Us</Link></li>    
                 <li><Link to="/contact">Contact</Link></li>
               </ul>
             </div>
             
-            <div className="footer-section">
+            {/* <div className="footer-section">
               <h3 className="footer-title">Support</h3>
               <ul className="footer-links">
                 <li><Link to="/help">Help Center</Link></li>
@@ -84,7 +100,7 @@ const Footer = () => {
                 <li><Link to="/refund">Refund Policy</Link></li>
                 <li><Link to="/faq">FAQ</Link></li>
               </ul>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

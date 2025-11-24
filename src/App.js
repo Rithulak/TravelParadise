@@ -14,6 +14,8 @@ import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminRegister from './pages/admin/AdminRegister';
 import OfferForm from './pages/admin/OfferForm';
 import DestinationFeed from './pages/DestinationFeed';
+import AboutPage from './pages/AboutPage';
+import Info from './components/info';
 
 // add other pages as needed
 
@@ -30,7 +32,11 @@ export default function App() {
           <Route path="houseboats" element={<HouseboatsList />} />
           <Route path="/houseboats/:title" element={<HouseboatDetail />} />
           <Route path="destinationfeed" element={<DestinationFeed />} />
+          <Route path="info" element={<Info/>} />
         </Route>
+
+        <Route path="about" element={<AboutPage />} />
+
           {/* Admin Routes (No Layout - standalone pages) */}
           <Route path="TP-admin/login" element={<AdminLogin />} />
           <Route path="TP-admin/dashboard" element={<AdminDashboard />} />

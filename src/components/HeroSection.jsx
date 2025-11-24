@@ -49,7 +49,11 @@ export default function HeroSection() {
   }, []);
 
   const handleCardClick = (categoryKey) => {
-    navigate(`/${categoryKey}`);
+    // Find the category object to pass to the destination feed
+    const selectedCategory = categories.find(cat => cat.key === categoryKey);
+    if (selectedCategory) {
+      navigate('/destinationfeed', { state: { selectedOffer: { title: selectedCategory.label } } });
+    }
   };
 
   const handleDealsClick = () => {
