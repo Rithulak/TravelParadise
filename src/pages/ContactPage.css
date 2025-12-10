@@ -1,0 +1,254 @@
+.contact-page-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #f0f2f5;
+  padding: 2rem;
+  padding-top: 120px; /* Add padding to avoid navbar overlap */
+}
+
+.contact-card {
+  background: white;
+  padding: 2.5rem 3rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  max-width: 500px;
+  width: 100%;
+  text-align: center;
+  border-top: 5px solid #0055ff;
+}
+
+.contact-header h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0;
+}
+
+.contact-header p {
+  font-size: 1.1rem;
+  color: #6b7280;
+  margin-top: 0.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.contact-details {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  text-align: left;
+}
+
+.contact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  font-size: 1rem;
+  color: #374151;
+}
+
+.contact-icon {
+  color: #0055ff;
+  flex-shrink: 0;
+  margin-top: 0.25rem;
+}
+
+.contact-item a {
+  color: #374151;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.contact-item a:hover {
+  color: #0055ff;
+}
+
+/* New styles for the add branch form */
+.add-branch-section {
+  width: 100%;
+  max-width: 500px; /* Match contact card width */
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.add-branch-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 2rem;
+  background-color: #0055ff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-bottom: 1.5rem;
+}
+
+.add-branch-button:hover {
+  background-color: #0044cc;
+}
+
+.add-branch-form-card {
+  padding: 2rem;
+  text-align: left;
+  width: 100%;
+}
+
+.add-branch-form-card .contact-header {
+  margin-bottom: 1.5rem;
+}
+
+.add-branch-form-card .contact-header h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.add-branch-form .form-group {
+  margin-bottom: 1rem;
+}
+
+.add-branch-form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #374151;
+}
+
+.add-branch-form input[type="text"],
+.add-branch-form input[type="tel"],
+.add-branch-form input[type="email"],
+.add-branch-form textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 1rem;
+  box-sizing: border-box; /* Ensure padding doesn't increase width */
+}
+
+.add-branch-form input:focus,
+.add-branch-form textarea:focus {
+  outline: none;
+  border-color: #0055ff;
+  box-shadow: 0 0 0 3px rgba(0, 85, 255, 0.2);
+}
+
+.submit-branch-button {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #0055ff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 1rem;
+}
+
+.submit-branch-button:hover {
+  background-color: #0044cc;
+}
+
+/* New styles for the add branch form */
+.add-branch-section {
+  width: 100%;
+  max-width: 500px; /* Match contact card width */
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.add-branch-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 2rem;
+  background-color: #0055ff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-bottom: 1.5rem;
+}
+
+.add-branch-button:hover {
+  background-color: #0044cc;
+}
+
+.add-branch-form-card {
+  padding: 2rem;
+  text-align: left;
+  width: 100%;
+}
+
+.add-branch-form-card .contact-header {
+  margin-bottom: 1.5rem;
+}
+
+.add-branch-form-card .contact-header h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.add-branch-form .form-group {
+  margin-bottom: 1rem;
+}
+
+.add-branch-form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #374151;
+}
+
+.add-branch-form input[type="text"],
+.add-branch-form input[type="tel"],
+.add-branch-form input[type="email"],
+.add-branch-form textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 1rem;
+  box-sizing: border-box; /* Ensure padding doesn't increase width */
+}
+
+.add-branch-form input:focus,
+.add-branch-form textarea:focus {
+  outline: none;
+  border-color: #0055ff;
+  box-shadow: 0 0 0 3px rgba(0, 85, 255, 0.2);
+}
+
+.submit-branch-button {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #0055ff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 1rem;
+}
+
+.submit-branch-button:hover {
+  background-color: #0044cc;
+}

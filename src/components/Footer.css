@@ -214,6 +214,11 @@
   width: auto;
 }
 
+.footer-title-link {
+    color: inherit;
+    text-decoration: none;
+}
+
 /* Responsive Styles */
 @media (max-width: 1024px) {
 
@@ -265,4 +270,9 @@
     text-align: center;
     font-size: 12px;
   }
+  
+.footer-links-destination{
+    grid-template-columns: repeat(4,1fr);
+    font-size: 10px;
+}
 }

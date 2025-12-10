@@ -2,9 +2,17 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { MessageCircle, MapPin, DollarSign, Heart, Mail, Phone, Send } from 'lucide-react';
 import './DestinationFeed.css';
+import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
+import axios from 'axios';
+
+
+const PAGE_SIZE = 10;
 
 const OffersFeed = () => {
+  // const { t } = useTranslation(['translation', 'destinationFeed']);
+  const { t } = useTranslation(['translation', 'destinationFeed', 'destinationOffers']);
+  const [allOffers, setAllOffers] = useState([]);
   const [offers, setOffers] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -343,132 +351,141 @@ const OffersFeed = () => {
   // Track scroll position to show/hide button
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 400) {
-        setShowScrollBtn(true);
-      } else {
-        setShowScrollBtn(false);
-      }
+      setShowScrollBtn(window.scrollY > 400);
     };
-
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Load more offers (simulating infinite scroll)
+  // Load offers from Google Sheets (Offers2 main, optionally Offers)
+  useEffect(() => {
+    const loadFromSheet = async () => {
+      try {
+        setLoading(true);
+
+        // Main sheet with full structure
+        const res2 = await axios.get('/.netlify/functions/offers2');
+        const data2 = res2.data;
+        let loaded = Array.isArray(data2.offers) ? data2.offers : [];
+
+        // OPTIONAL: also load "Offers" sheet and append if needed
+        // const res1 = await axios.get('http://localhost:5000/api/offers');
+        // const data1 = res1.data;
+        // const loaded1 = Array.isArray(data1.offers) ? data1.offers : [];
+        // loaded = [...loaded2, ...loaded1];
+
+        // Normalize numeric fields
+        loaded = loaded.map(o => ({
+          ...o,
+          id: Number(o.id),
+          price: Number(o.price),
+          rating: o.rating !== undefined ? Number(o.rating) : 4.5,
+          reviews: o.reviews !== undefined ? Number(o.reviews) : 0,
+        }));
+
+        // Handle selectedOffer (from previous page) – put it first
+        if (selectedOffer) {
+          const full = loaded.find(o => Number(o.id) === Number(selectedOffer.id));
+          if (full) {
+            const others = loaded.filter(o => Number(o.id) !== Number(selectedOffer.id));
+            const ordered = [full, ...others];
+            setAllOffers(ordered);
+            setOffers(ordered.slice(0, PAGE_SIZE));
+            setPage(2);
+            setHasMore(ordered.length > PAGE_SIZE);
+
+            // scroll to that offer and highlight
+            setTimeout(() => {
+              const ref = offerRefs.current[full.id];
+              if (ref) {
+                ref.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                ref.classList.add('highlight-offer');
+                setTimeout(() => ref.classList.remove('highlight-offer'), 2000);
+              }
+            }, 300);
+          } else {
+            setAllOffers(loaded);
+            setOffers(loaded.slice(0, PAGE_SIZE));
+            setPage(2);
+            setHasMore(loaded.length > PAGE_SIZE);
+          }
+        } else {
+          // Normal initial load
+          setAllOffers(loaded);
+          setOffers(loaded.slice(0, PAGE_SIZE));
+          setPage(2);
+          setHasMore(loaded.length > PAGE_SIZE);
+        }
+      } catch (err) {
+        console.error('Error loading offers from sheet:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadFromSheet();
+  }, [selectedOffer]);
+
+  // Load more offers for infinite scroll
   const loadMoreOffers = useCallback(() => {
     if (loading || !hasMore) return;
-
     setLoading(true);
-
-    // Simulate API call
     setTimeout(() => {
-      const startIndex = (page - 1) * 10;
-      const endIndex = startIndex + 10;
-      const newOffers = DUMMY_OFFERS.slice(startIndex, endIndex);
-
-      if (newOffers.length === 0) {
-        setHasMore(false);
-      } else {
-        // Ensure no duplicates are added
-        setOffers(prev => {
-          const existingIds = new Set(prev.map(o => o.id));
-          const filteredNewOffers = newOffers.filter(o => !existingIds.has(o.id));
-          return [...prev, ...filteredNewOffers];
-        });
-        setPage(prev => prev + 1);
-      }
-
+      setOffers(prev => {
+        const start = (page - 1) * PAGE_SIZE;
+        const end = start + PAGE_SIZE;
+        const next = allOffers.slice(start, end);
+        if (next.length === 0) {
+          setHasMore(false);
+          return prev;
+        }
+        return [...prev, ...next];
+      });
+      setPage(prev => prev + 1);
       setLoading(false);
-    }, 1000);
-  }, [page, loading, hasMore]);
+    }, 400);
+  }, [allOffers, page, hasMore, loading]);
 
-  const lastOfferRef = useCallback(node => {
-    if (loading) return;
-    if (observer.current) observer.current.disconnect();
-
-    observer.current = new IntersectionObserver(entries => {
-      if (entries[0].isIntersecting && hasMore) {
-        loadMoreOffers();
-      }
-    });
-
-    if (node) observer.current.observe(node);
-  }, [loading, hasMore, loadMoreOffers]);
-
-  // Initial load logic
-  useEffect(() => {
-    if (selectedOffer) {
-      // Find the full offer object from DUMMY_OFFERS using the ID from the selected offer
-      const fullSelectedOffer = DUMMY_OFFERS.find(o => o.id === selectedOffer.id);
-
-      if (fullSelectedOffer) {
-        // Place the full selected offer first, then the rest, avoiding duplicates.
-        const otherOffers = DUMMY_OFFERS.filter(o => o.id !== fullSelectedOffer.id);
-        const initialOffers = [fullSelectedOffer, ...otherOffers];
-        setOffers(initialOffers);
-        setPage(Math.ceil(initialOffers.length / 10) + 1); // Adjust page for infinite scroll
-        setHasMore(initialOffers.length < DUMMY_OFFERS.length);
-
-        // Scroll to the selected offer
-        setTimeout(() => {
-          if (offerRefs.current[fullSelectedOffer.id]) {
-            offerRefs.current[fullSelectedOffer.id].scrollIntoView({
-              behavior: "smooth",
-              block: "center",
-            });
-            // Optional: Highlight for visual cue
-            offerRefs.current[fullSelectedOffer.id].classList.add("highlight-offer");
-            setTimeout(() => {
-              offerRefs.current[fullSelectedOffer.id]?.classList.remove("highlight-offer");
-            }, 2000);
-          }
-        }, 100);
-      } else {
-        // Fallback if the selected offer is not found in the dummy data
-        loadMoreOffers();
-      }
-    } else {
-      // Normal initial load if no offer is selected
-      loadMoreOffers();
-    }
-  }, [selectedOffer, loadMoreOffers]);
+  // Intersection Observer for last item
+  const lastOfferRef = useCallback(
+    node => {
+      if (loading) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting && hasMore) {
+          loadMoreOffers();
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    [loading, hasMore, loadMoreOffers]
+  );
 
   const handleWhatsAppBook = (offer) => {
-    const message = `Hi! I'm interested in booking: ${offer.title}\nLocation: ${offer.location}\nPrice: ₹${offer.price.toLocaleString('en-IN')}\n\nPlease provide more details.`;
+    const message = `Hi! I'm interested in booking: ${offer.title}
+Location: ${offer.location || ''}
+Price: ₹${offer.price.toLocaleString('en-IN')}
+
+Please provide more details.`;
     const whatsappUrl = `https://wa.me/${offer.whatsapp}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };
 
   const handleInquiryFormChange = (field, value) => {
-    setInquiryForm(prev => ({
-      ...prev,
-      [field]: value
-    }));
+    setInquiryForm(prev => ({ ...prev, [field]: value }));
   };
 
   const handleInquirySubmit = (e) => {
     e.preventDefault();
-    
-    // Create mailto link
     const subject = encodeURIComponent(inquiryForm.subject || 'General Inquiry about Kerala Tourism');
     const body = encodeURIComponent(
       `Name: ${inquiryForm.name}\nEmail: ${inquiryForm.email}\nPhone: ${inquiryForm.phone}\n\nMessage:\n${inquiryForm.message}`
     );
-    
-    window.location.href = `mailto:hotels@keralatourism.com?subject=${subject}&body=${body}`;
-    
-    // Reset form
-    setInquiryForm({
-      name: '',
-      email: '',
-      phone: '',
-      subject: '',
-      message: ''
-    });
+    window.location.href = `mailto:tourismparadiseajai@gmail.com?subject=${subject}&body=${body}`;
+    setInquiryForm({ name: '', email: '', phone: '', subject: '', message: '' });
   };
 
   const scrollToInquiry = () => {
-    // If form is not loaded yet, scroll to bottom of page
     if (inquiryRef.current) {
       inquiryRef.current.scrollIntoView({ behavior: 'smooth' });
     } else {
@@ -481,11 +498,13 @@ const OffersFeed = () => {
       <div className="offers-feed-list">
         {offers.map((offer, index) => {
           const isLastItem = index === offers.length - 1;
+          const titleKey = `destinationOffers:${offer.id}.title`;
+          const descKey = `destinationOffers:${offer.id}.description`;
 
           return (
             <div
               key={offer.id}
-              ref={(el) => {
+              ref={el => {
                 offerRefs.current[offer.id] = el;
                 if (isLastItem) lastOfferRef(el);
               }}
@@ -501,20 +520,25 @@ const OffersFeed = () => {
 
               {/* Details Section */}
               <div className="offer-row-details">
-                <h2 className="offer-row-title">{offer.title}</h2>
+                <h2 className="offer-row-title">
+                  {t(titleKey, { defaultValue: offer.title })}
+                </h2>
 
-                {/* Conditionally render location with an icon if it exists */}
                 {offer.location && (
                   <div className="offer-row-location">
                     <MapPin size={14} /> <span>{offer.location}</span>
                   </div>
                 )}
 
-                <p className="offer-row-description">{offer.description}</p>
+                <p className="offer-row-description">
+                  {t(descKey, { defaultValue: offer.description })}
+                </p>
 
                 <div className="offer-row-info">
                   <div className="offer-row-price">
-                    <span className="price-amount">₹{offer.price.toLocaleString('en-IN')}</span>
+                    <span className="price-amount">
+                      ₹{offer.price.toLocaleString('en-IN')}
+                    </span>
                     <span className="price-label">/ night</span>
                   </div>
                   <div className="offer-row-rating">
@@ -526,26 +550,31 @@ const OffersFeed = () => {
 
                 {/* Contact Info */}
                 <div className="offer-contact-info">
-                  <div className="contact-item">
-                    <Phone size={16} />
-                    <span>+{offer.whatsapp}</span>
-                  </div>
-                  <div className="contact-item">
-                    <Mail size={16} />
-                    <span>{offer.email}</span>
-                  </div>
+                  {offer.whatsapp && (
+                    <div className="contact-item">
+                      <Phone size={16} />
+                      <span>+{offer.whatsapp}</span>
+                    </div>
+                  )}
+                  {offer.email && (
+                    <div className="contact-item">
+                      <Mail size={16} />
+                      <span>{offer.email}</span>
+                    </div>
+                  )}
                 </div>
 
                 {/* WhatsApp Button */}
-                <button
-                  onClick={() => handleWhatsAppBook(offer)}
-                  className="offer-whatsapp-btn-inline"
-                >
-                  <MessageCircle size={18} />
-                  Book via WhatsApp
-                </button>
+                {offer.whatsapp && (
+                  <button
+                    onClick={() => handleWhatsAppBook(offer)}
+                    className="offer-whatsapp-btn-inline"
+                  >
+                    <MessageCircle size={18} />
+                    {t('destinationFeed:bookViaWhatsapp')}
+                  </button>
+                )}
               </div>
-
             </div>
           );
         })}
@@ -554,25 +583,25 @@ const OffersFeed = () => {
       {loading && (
         <div className="offers-feed-loading" role="status" aria-live="polite">
           <div className="loading-spinner"></div>
-          <p>Loading more offers...</p>
+          <p>{t('destinationFeed:loadingMore')}</p>
         </div>
       )}
 
-      {/* Inquiry Form Section at Bottom of Page */}
+      {/* Inquiry Form Section */}
       {!hasMore && (
         <div className="general-inquiry-section" ref={inquiryRef}>
           <div className="inquiry-container">
-            <h2 className="inquiry-title">Have Questions? Get in Touch!</h2>
+            <h2 className="inquiry-title">{t('destinationFeed:inquiryTitle')}</h2>
             <p className="inquiry-subtitle">
-              Send us your inquiry and our team will get back to you within 24 hours
+              {t('destinationFeed:inquirySubtitle')}
             </p>
-            
+
             <form onSubmit={handleInquirySubmit} className="general-inquiry-form">
               <div className="form-row">
                 <div className="form-group">
                   <input
                     type="text"
-                    placeholder="Your Name *"
+                    placeholder={t('destinationFeed:yourName')}
                     value={inquiryForm.name}
                     onChange={(e) => handleInquiryFormChange('name', e.target.value)}
                     required
@@ -582,7 +611,7 @@ const OffersFeed = () => {
                 <div className="form-group">
                   <input
                     type="email"
-                    placeholder="Your Email *"
+                    placeholder={t('destinationFeed:yourEmail')}
                     value={inquiryForm.email}
                     onChange={(e) => handleInquiryFormChange('email', e.target.value)}
                     required
@@ -591,11 +620,11 @@ const OffersFeed = () => {
                 </div>
               </div>
 
-              <div className="form-row">
+                            <div className="form-row">
                 <div className="form-group">
                   <input
                     type="tel"
-                    placeholder="Phone Number"
+                    placeholder={t('destinationFeed:phoneNumber')}
                     value={inquiryForm.phone}
                     onChange={(e) => handleInquiryFormChange('phone', e.target.value)}
                     className="form-input"
@@ -604,7 +633,7 @@ const OffersFeed = () => {
                 <div className="form-group">
                   <input
                     type="text"
-                    placeholder="Subject"
+                    placeholder={t('destinationFeed:subject')}
                     value={inquiryForm.subject}
                     onChange={(e) => handleInquiryFormChange('subject', e.target.value)}
                     className="form-input"
@@ -614,7 +643,7 @@ const OffersFeed = () => {
 
               <div className="form-group">
                 <textarea
-                  placeholder="Your Message *"
+                  placeholder={t('destinationFeed:yourMessage')}
                   value={inquiryForm.message}
                   onChange={(e) => handleInquiryFormChange('message', e.target.value)}
                   required
@@ -625,19 +654,19 @@ const OffersFeed = () => {
 
               <button type="submit" className="inquiry-submit-btn">
                 <Mail size={18} />
-                Send Inquiry
+                {t('destinationFeed:sendInquiry')}
               </button>
             </form>
           </div>
         </div>
       )}
 
-      {/* Floating Scroll to Inquiry Button - Shows immediately when scrolling */}
+      {/* Floating Scroll to Inquiry Button */}
       {showScrollBtn && (
         <button
           onClick={scrollToInquiry}
           className="scroll-to-inquiry-btn"
-          aria-label="Scroll to inquiry form"
+          aria-label={t('destinationFeed:scrollToInquiryAria')}
         >
           <Send size={24} />
         </button>

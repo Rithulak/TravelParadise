@@ -1,4 +1,4 @@
-// src/components/HeroSection.jsx
+ // src/components/HeroSection.jsx
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -7,13 +7,14 @@ import {
   FaCamera, FaUmbrella, FaTicketAlt, FaCalendarAlt,
   FaSun, FaHome, FaWallet, FaBicycle, FaCity, FaAnchor ,FaUtensils,FaLandmark,FaCampground
 } from "react-icons/fa";
+import { Fish, Home, Box, Scissors, Anchor, ImageIcon } from "lucide-react";
 import { FaSailboat } from "react-icons/fa6";
 import { useTranslation } from 'react-i18next';
 import HouseboatsCarousel from './OffersCarousel';
 import './HeroSection.css';
 
 const categories = [
-  { key: 'houseboats', label: 'houseboats', icon: FaShip },
+  { key: 'houseboats', label: 'houseboats', icon: FaShip }, 
   { key: 'shikara', label: 'shikara', icon: FaSailboat }, 
   { key: 'flights', label: 'flights', icon: FaPlane },
   { key: 'hotels', label: 'hotels', icon: FaHotel },
@@ -22,21 +23,21 @@ const categories = [
   { key: 'cars', label: 'cars', icon: FaCar },
   { key: 'tours', label: 'tours', icon: FaCompass },
   { key: 'cruises', label: 'cruises', icon: FaAnchor },
-  { key: 'activities', label: 'activities', icon: FaTicketAlt },
+  { key: 'seaFishRestaurants', label: 'seaFishRestaurants', icon: Fish },
   { key: 'packages', label: 'packages', icon: FaCalendarAlt },
   { key: 'weekend', label: 'weekend', icon: FaSun },
   { key: 'beaches', label: 'beaches', icon: FaUmbrellaBeach },
   { key: 'mountains', label: 'mountains', icon: FaMountain },
   { key: 'adventure', label: 'adventure', icon: FaCompass },
-  { key: 'citybreaks', label: 'citybreaks', icon: FaCity },
+  { key: 'backwaterVillageStay', label: 'backwaterVillageStay', icon: Home },
   { key: 'photography', label: 'photography', icon: FaCamera },
-  { key: 'insurance', label: 'insurance', icon: FaUmbrella },
-  { key: 'passes', label: 'passes', icon: FaTicketAlt },
+  { key: 'keralaChipsAndSpices', label: 'keralaChipsAndSpices', icon: Box },
+  { key: 'keralaHandlooms', label: 'keralaHandlooms', icon: Scissors },
   { key: 'budget', label: 'budget', icon: FaWallet },
   { key: 'bikes', label: 'bikes', icon: FaBicycle },
   { key: 'villas', label: 'villas', icon: FaHome },
   { key: 'food', label: 'food', icon: FaUtensils },
-  { key: 'camping', label: 'camping', icon: FaCampground },
+  { key: 'honeymoonBoatHouse', label: 'honeymoonBoatHouse', icon: Anchor },
 ];
 
 export default function HeroSection() {
@@ -103,7 +104,7 @@ export default function HeroSection() {
           </p>
         </header>
         <div className={`quick-actions ${isVisible ? 'animate-in' : ''}`}>
-          <button className="btn btn-primary" onClick={handleDealsClick}>
+          <button className="btn btn-primary" onClick={handleExploreClick}>
             {t('todaysDeals')}
           </button>
           <button className="btn btn-secondary" onClick={handleExploreClick}>

@@ -1,12 +1,50 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Facebook, Instagram, Twitter, Youtube, Plane } from 'lucide-react';
+import { Facebook, Instagram, Twitter, Youtube } from 'lucide-react';
 import './Footer.css';
 import { useTranslation } from 'react-i18next';  
 
 const Footer = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('footer');
+
+  const destinationLinks = [
+    'keralaBudgetHouseboat',
+    'luxuryTopEndHouseboat',
+    'b2bPriceKeralaHouseboats',
+    'houseboatsInAlappuzha',
+    'budgetBoatHouseAllepey',
+    'budgetBoatHouseAlappuzha',
+    'budgetHouseboatAllepey',
+    'budgetHouseboatAlappuzha',
+    'budgetAlleppeyBoatHouse',
+    'spotBookingBoatHouse',
+    'prepaidTaxiCochinAirport',
+    'budgetAlappuzhaHouseboats',
+    'budgetAlleppeyHouseboats',
+    'b2bAlleppeyHouseboats',
+    'privateAlleppeyHouseboats',
+    'houseboatsInIndia',
+    'sharedHouseboatsInAlleppey',
+    'sharingHouseboatsInAlleppey',
+    'sharingBoathouseInAlleppey',
+    'clubbingHouseboatsInAlleppey',
+    'clubbingBoathouseInAlleppey',
+    'luxuryHouseboatsInAlleppey',
+    'premiumHouseboatsInAlleppey',
+    'deluxeHouseboatsInAlleppey',
+    'standardHouseboatsInAlleppey',
+    'ultraLuxuryHouseboatsInAlleppey',
+    'ultraLuxurySharingHouseboatsInAlleppey',
+    'bestHouseboatsInAlleppey',
+    'bestLuxuryHouseboatsInAlleppey',
+    'bestPremiumHouseboatsInAlleppey',
+    'bestDeluxeHouseboatsInAlleppey',
+    'bestStandardHouseboatsInAlleppey',
+    'bestAlappuzhaHouseboatPackages',
+    'bestAlappuzhaBoatHousePackages',
+  ];
+
   return (
     <footer className="footer">
       <div className="footer-content">
@@ -20,7 +58,7 @@ const Footer = () => {
                   <span className="brand-text"><span style={{color: 'red'}}>T</span>ourism <span style={{color: 'red'}}>P</span>aradise</span>
                 </Link>
                 <p className="footer-description">
-                  Your trusted travel companion for unforgettable journeys. Creating memories that last a lifetime.
+                  {t('description')}
                 </p>
                 <div className="social-links">
                   <a href="#" aria-label="Facebook" className="social-link"><Facebook size={20} /></a>
@@ -31,63 +69,33 @@ const Footer = () => {
               </div>
             </div>
             <div className="footer-section-destination">
-              <h3 className="footer-title-destination">Destinations</h3>
+              <h3 className="footer-title-destination"><Link to="/destinations" className="footer-title-link">{t('destinations.title')}</Link></h3>
               <ul className="footer-links-destination">
-                <li><Link to="/destinationfeed">Kerala Budget Houseboat</Link></li>
-                <li><Link to="/destinationfeed">Luxury Top End Houseboat</Link></li>
-                <li><Link to="/destinationfeed">B2b Price Kerala Houseboats</Link></li>
-                <li><Link to="/destinationfeed">Houseboats in Alappuzha</Link></li>
-                <li><Link to="/destinationfeed">Budget Boat House Allepey</Link></li>
-                <li><Link to="/destinationfeed">Budget Boat House Alappuzha</Link></li>
-                <li><Link to="/destinationfeed">Budget Houseboat Allepey</Link></li>
-                <li><Link to="/destinationfeed">Budget Houseboat Alappuzha</Link></li>
-                <li><Link to="/destinationfeed">Budget Alleppey Boat House</Link></li>
-                <li><Link to="/destinationfeed">Spot Booking Boat House</Link></li>
-                <li><Link to="/destinationfeed">Prepaid Taxi Service in Cochin Airport</Link></li>
-                <li><Link to="/destinationfeed">Budget Alappuzha Houseboats</Link></li>
-                <li><Link to="/destinationfeed">Budget Alleppey Houseboats</Link></li>
-                <li><Link to="/destinationfeed">B2b Alleppey Houseboats</Link></li>
-                <li><Link to="/destinationfeed">Private Alleppey Houseboats</Link></li>
-                <li><Link to="/destinationfeed">Houseboats in India</Link></li>
-
-                <li><Link to="/destinationfeed">Shared houseboats In Alleppey </Link></li>
-                <li><Link to="/destinationfeed">Sharing Houseboats In Alleppey </Link></li>
-                <li><Link to="/destinationfeed">Sharing Boathouse In Alleppey</Link></li>
-                <li><Link to="/destinationfeed">Sharing Houseboats In Alleppey </Link></li>
-                <li><Link to="/destinationfeed">Clubbing Houseboats In Alleppey</Link></li>
-                <li><Link to="/destinationfeed">Clubbing Boathouse In Alleppey</Link></li>
-                <li><Link to="/destinationfeed">Luxury Houseboats In Alleppey</Link></li>
-                <li><Link to="/destinationfeed">Premium Houseboats In Alleppey</Link></li>
-                <li><Link to="/destinationfeed">Deluxe Houseboats In Alleppey</Link></li>
-                <li><Link to="/destinationfeed">Standard Houseboats In Alleppey</Link></li>
-                <li><Link to="/destinationfeed">Ultra Luxury Houseboats In Alleppey</Link></li>
-                <li><Link to="/destinationfeed">Ultra Luxury Sharing Houseboats In Alleppey</Link></li>
-                <li><Link to="/destinationfeed">Best Houseboats In Alleppey</Link></li>
-                <li><Link to="/destinationfeed">Best Luxury Houseboats In Alleppey</Link></li>
-                <li><Link to="/destinationfeed">Best Premium Houseboats In Alleppey</Link></li>
-                <li><Link to="/destinationfeed">Best Deluxe Houseboats In Alleppey</Link></li>
-                <li><Link to="/destinationfeed">Best Standard Houseboats In Alleppey</Link></li>
-                <li><Link to="/destinationfeed">Best Alappuzha Houseboat Packages</Link></li>
-                <li><Link to="/destinationfeed">Best Alappuzha Boat House Packages</Link></li>
+                {destinationLinks.map(linkKey => (
+                  <li key={linkKey}><Link to="/destinationfeed">{t(`destinations.${linkKey}`)}</Link></li>
+                ))}
               </ul>
             </div>
             <div className="footer-grid">
             {/* Quick Links Sections */}
             
             <div className="footer-section">
-              <h3 className="footer-title">Services</h3>
+              <h3 className="footer-title">{t('services.title')}</h3>
               <ul className="footer-links">
-                <li><Link to="/destinationfeed">Flight Booking</Link></li>
-                <li><Link to="/destinationfeed">Hotel Reservation</Link></li>
-                <li><Link to="/destinationfeed">Tour Packages</Link></li>
+                <li><Link to="/destinationfeed">{t('services.flightBooking')}</Link></li>
+                <li><Link to="/destinationfeed">{t('services.hotelReservation')}</Link></li>
+                <li><Link to="/destinationfeed">{t('services.tourPackages')}</Link></li>
               </ul>
             </div>
             
             <div className="footer-section">
-              <h3 className="footer-title">Company</h3>
+              <h3 className="footer-title">{t('company.title')}</h3>
               <ul className="footer-links">
-                <li><Link to="/about">About Us</Link></li>    
-                <li><Link to="/contact">Contact</Link></li>
+                <li><Link to="/about">{t('company.aboutUs')}</Link></li>    
+                <li><Link to="/contact">{t('company.contact')}</Link></li>
+                <Link to="/admin/login" className="admin-link">
+                  🔐 Admin Login
+                </Link>
               </ul>
             </div>
             
@@ -110,7 +118,7 @@ const Footer = () => {
         <div className="container">
           <div className="footer-bottom-content">
             <p className="copyright-text">
-              © 2025 Tourism Paradise. All rights reserved.
+              {t('copyright', { year: new Date().getFullYear() })}
             </p>
           </div>
         </div>
