@@ -16,7 +16,7 @@ import AdminRegister from './pages/admin/AdminRegister';
 import OfferForm from './pages/admin/OfferForm';
 import DestinationFeed from './pages/DestinationFeed';
 import AboutPage from './pages/AboutPage';
-import InfoPage from './components/Info';
+import InfoPage from './components/info';
 import DestinationDetails from './pages/DestinationDetail';
 import ContactPage from './pages/ContactPage';
 import DestinationsPage from './components/DestinationsPage';
