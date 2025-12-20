@@ -5,6 +5,7 @@ import './DestinationFeed.css';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
+import { API_ROUTES } from '../config/amplifyConfig';
 
 
 const PAGE_SIZE = 10;
@@ -364,7 +365,7 @@ const OffersFeed = () => {
         setLoading(true);
 
         // Main sheet with full structure
-        const res2 = await axios.get('/.netlify/functions/offers2');
+        const res2 = await axios.get(API_ROUTES.offers2);
         const data2 = res2.data;
         let loaded = Array.isArray(data2.offers) ? data2.offers : [];
 

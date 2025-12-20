@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
+import { API_ROUTES } from '../config/amplifyConfig';
 
 const CookieConsentWithUserData = () => {
   const [cookies, setCookie] = useCookies(['tourismConsent', 'userData']);
@@ -331,7 +332,7 @@ if (!showBanner || (cookies.tourismConsent && cookies.tourismConsent !== 'declin
     setLoading(true);
 
     try {
-      const response = await fetch('/.netlify/functions/saveCookieConsent', {
+      const response = await fetch(API_ROUTES.saveCookieConsent, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
