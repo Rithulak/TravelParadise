@@ -5,6 +5,7 @@ const SPREADSHEET_ID = process.env.SPREADSHEET_ID;
 
 async function getSheetsClient() {
   const credentials = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON);
+  credentials.private_key = credentials.private_key.replace(/\\n/g, '\n')
   const auth = new google.auth.GoogleAuth({
     credentials,
     scopes: ["https://www.googleapis.com/auth/spreadsheets.readonly"],
