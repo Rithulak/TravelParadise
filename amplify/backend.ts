@@ -1,6 +1,4 @@
 import { defineBackend } from '@aws-amplify/backend';
-import { auth } from './auth/resource';
-import { data } from './data/resource';
 import { offers } from './functions/offers/resource';
 import { offers2 } from './functions/offers2/resource';
 import { adminOffers } from './functions/adminOffers/resource';
@@ -11,14 +9,11 @@ import {
   LambdaIntegration,
   RestApi,
 } from 'aws-cdk-lib/aws-apigateway';
-import { Policy, PolicyStatement } from 'aws-cdk-lib/aws-iam';
 
 /**
  * @see https://docs.amplify.aws/react/build-a-backend/ to add storage, functions, and more
  */
 const backend = defineBackend({
-  auth,
-  data,
   offers,
   offers2,
   adminOffers,
