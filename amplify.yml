@@ -15,6 +15,7 @@ frontend:
   phases:
     build:
       commands:
+        - cp amplify_outputs.json src/ 2>/dev/null || echo "No amplify_outputs.json yet"
         - npm run build
   artifacts:
     baseDirectory: build
