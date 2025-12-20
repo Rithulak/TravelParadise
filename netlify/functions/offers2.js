@@ -3,12 +3,13 @@ const { google } = require("googleapis");
 
 const SPREADSHEET_ID = process.env.SPREADSHEET_ID;
 
+console.log("RAW CREDS ENV (first 200 chars):",
+  process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON
+);
+
 async function getSheetsClient() {
   const credentials = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON);
   credentials.private_key = credentials.private_key.replace(/\\n/g, '\n')
-  console.log("RAW CREDS ENV (first 200 chars):",
-    process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON?.slice(0, 200)
-  );
 
   const auth = new google.auth.GoogleAuth({
     credentials,
